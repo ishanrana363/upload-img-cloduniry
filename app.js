@@ -11,6 +11,9 @@ const app = express();
 app.use(express.urlencoded({ limit: '1000mb'}));
 app.use(express.json({limit: '1000mb'}));
 
+app.get("/",(req,res)=>{
+    res.send("Server is running!");
+})
 
 mongoose.connect(dbUrl).then((res)=>{
     console.log(`-----Database connection established-----`)
