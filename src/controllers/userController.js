@@ -3,26 +3,19 @@ const cloudinary = require("../helper/cludinaryHelper");
 const userModelTow = require("../models/userModelTow");
 class userClass {
   registration = async (req, res) => {
-    console.log(req.file); // Check uploaded file info
     try {
-      const { name, email, password } = req.body;
-      console.log(name, email, password);
-
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "user-images",
       });
 
       const newUser = new userModel({
-        name,
-        email,
-        password,
         avatar: result.secure_url,
       });
 
       await newUser.save();
       res
         .status(201)
-        .json({ message: "User registered successfully", newUser });
+        .json({ message: "User registered successfully", data: newUser });
     } catch (error) {
       res.status(500).json({ message: "Error in registration" });
     }
@@ -41,7 +34,7 @@ class userClass {
         imageUrls.push(result.secure_url);
         console.log(imageUrls)
       }
-      
+
 
       const newUser = new userModelTow({
         name,
