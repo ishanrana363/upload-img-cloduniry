@@ -56,6 +56,24 @@ class userClass {
       res.status(500).json({ error: "Failed to register user" });
     }
   };
+  allImage = async (req, res) => {
+    try {
+      let data = await userModel.find();
+      if(data.length===0) return res.status(404).json({
+        status:"fail",
+        msg : "Img not found"
+      });
+      res.status(200).json({
+        status:"success",
+        data
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status:"fail",
+        msg : `${error.toString()}`
+      })
+    }
+  };
 }
 
 const userController = new userClass();
